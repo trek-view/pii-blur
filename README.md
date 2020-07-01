@@ -35,6 +35,14 @@ Works on Windows, Linux and MacOS.
 ### Software Requirements / Installation
 
 
+## Usage
+
+```
+python pii-blur.py [INPUT] [OUTPUT_DIR]
+```
+
+Where `[INPUT]` is single of directory of image files you want to blur. 
+
 
 ## Other useful reads
 
