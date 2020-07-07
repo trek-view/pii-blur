@@ -21,7 +21,7 @@ Personally Identifiable Information is the result of that goal.
 ### Overview
 
 1. You define a single photo or directory of photos
-2. The script creates various versions of each photo in an attempt to identify people and cars
+2. The script creates various versions of each photo in an attempt to identify people trucks and cars
 3. If any information has been identified the script applies a smooth Gaussian blur
 4. And finally writes out new blurred image into output directory
 5. Any photos where no blurring required will remain unmodified but be copied into output directory.
@@ -47,15 +47,25 @@ You must also download the model file [resnet50_coco_best_v2.0.1.h5](https://git
 
 ## Usage
 
-There are two scripts `pii-blur-fast.py` and `pii-blur-slow.py`.
-
-`pii-blur-fast.py` is faster, but identified fewer objects. If clear cars and people in your images (e.g. full outline of car / person visible) is generally best to use this script (or at least check results) before using the `pii-blur-slow.py` version.
-
 ```
-python pii-blur.py [INPUT_DIR] [OUTPUT_DIR]
+python pii-blur.py [INPUT_DIR] [OUTPUT_DIR] [MIN_PERCENTAGE_PROBABILITY]
 ```
 
 Where `[INPUT]` is a directory of image files you want to blur and `[OUTPUT_DIR]` is where you want blur photos to be placed.
+
+`[MIN_PERCENTAGE_PROBABILITY]` is the % probability the object detected (either car, truck, or person) is corrected.
+
+Accepts values between 1 (highest probability) and 100 (lowest probability).
+
+```
+python pii-blur.py [INPUT_DIR] [OUTPUT_DIR] 50
+```
+
+For example, if you set to 50, you are saying blur if the detection thinks there is 50% chance this object is a car, truck, or person.
+
+1 assumes 100% confidence (which is extremely unlikely).
+
+Note, the lower the value entered the more intensively objects will be analysed, and thus the longer the script will take to run.
 
 ## Other useful reads
 

@@ -7,8 +7,6 @@ import time
 import sys
 from imageai.Detection import ObjectDetection
 
-
-
 def alphaBlend(img1, img2, mask):
     # print(mask)
     if mask.ndim==3 and mask.shape[-1] == 3:
@@ -18,9 +16,6 @@ def alphaBlend(img1, img2, mask):
     # print('alpha: ', alpha)
     blended = cv2.convertScaleAbs(img1*(1-alpha) + img2*alpha)
     return blended
-
-
-
 
 def blurImageWithCircle(originalimg, circles):
     img = originalimg
@@ -40,9 +35,8 @@ def drawRectangle(blurimg, rectangles):
         img = cv2.rectangle(img, (rect[0], rect[1]), (rect[2], rect[3]), (255,255,0), 2)
     return img
 
-def blurFile(detector, inputfile, outputfile, twicefile):
-    detections = detector.detectObjectsFromImage(input_image=inputfile, output_image_path='temp.jpg', minimum_percentage_probability=20)
-    # detections = detector.detectObjectsFromImage(input_image=inputfile, output_image_path=twicefile, minimum_percentage_probability=20)
+def blurFile(detector, inputfile, outputfile, twicefile, percentage = 25):
+    detections = detector.detectObjectsFromImage(input_image=inputfile, output_image_path='temp.jpg', minimum_percentage_probability=percentage)
     rectangles = []
     for eachObject in detections:
         # print(eachObject["name"] , " : " , eachObject["percentage_probability"] )
@@ -63,11 +57,9 @@ def blurFile(detector, inputfile, outputfile, twicefile):
  
     blurimg = blurImageWithCircle(img, circles)
     
-    # reimg = drawRectangle(blurimg, rectangles)
-    
+    # reimg = drawRectangle(blurimg, rectangles)    
 
     cv2.imwrite(outputfile, blurimg)
- 
  
 def main(argv):
     execution_path = os.getcwd()
@@ -78,6 +70,10 @@ def main(argv):
     detector.loadModel()
     inputdir = argv[0]
     outputdir = argv[1]
+    try:
+        percentage = int(argv[2])
+    except:
+        print('incorrect command')
     if isdir(outputdir):
         pass
     else:
@@ -88,7 +84,7 @@ def main(argv):
         infile = inputdir + '/' + inputfile
         outfile = outputdir + '/' + 'blur_' + inputfile
         twicefile = outputdir + '/' + 'twice_' + inputfile
-        blurFile(detector, infile,outfile, twicefile)
+        blurFile(detector, infile,outfile, twicefile, percentage)
     os.remove('temp.jpg')    
         
     # testin = 'testimages/Untitled.jpg'
