@@ -55,7 +55,7 @@ Where `[INPUT]` is a directory of image files you want to blur and `[OUTPUT_DIR]
 
 `[MIN_PERCENTAGE_PROBABILITY]` is the % probability the object detected (either car, truck, or person) is corrected.
 
-Accepts values between 1 (highest probability) and 100 (lowest probability).
+Accepts values between 1 (highest probability) and 100 (lowest probability). Recommended is 40.
 
 ```
 python pii-blur.py [INPUT_DIR] [OUTPUT_DIR] 50
