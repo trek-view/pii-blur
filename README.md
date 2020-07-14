@@ -45,6 +45,10 @@ The following modules are required
 
 You must also download the model file [resnet50_coco_best_v2.0.1.h5](https://github.com/OlafenwaMoses/ImageAI/releases/tag/1.0) and place in the `models` directory in this repository.
 
+* [exiftool](https://exiftool.org/) needs to be installed on the system. If used on Windows, download the stand-alone .exe executable. Rename the .exe file to `exiftool.exe`. Put the .exe file in the same folder as the repo.
+
+The `.ExifTool_Config` ([.ExifTool_Config explanation](https://exiftool.org/faq.html#Q11)) needs be in the HOME directory (Mac, Linux) or in the same folder as the repo (Windows)
+
 ## Usage
 
 ```

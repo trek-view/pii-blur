@@ -6,6 +6,7 @@ import cv2
 import time
 import sys
 from imageai.Detection import ObjectDetection
+from exiftool_custom import exiftool
 
 def alphaBlend(img1, img2, mask):
     # print(mask)
@@ -57,9 +58,13 @@ def blurFile(detector, inputfile, outputfile, twicefile, percentage = 25):
  
     blurimg = blurImageWithCircle(img, circles)
     
-    # reimg = drawRectangle(blurimg, rectangles)    
-
+    # reimg = drawRectangle(blurimg, rectangles)
+    
     cv2.imwrite(outputfile, blurimg)
+    
+    
+    with exiftool.ExifTool() as et:
+        et.copy_tags(inputfile, outputfile)    
  
 def main(argv):
     execution_path = os.getcwd()
@@ -86,7 +91,6 @@ def main(argv):
         twicefile = outputdir + '/' + 'twice_' + inputfile
         blurFile(detector, infile,outfile, twicefile, percentage)
     os.remove('temp.jpg')    
-        
     # testin = 'testimages/Untitled.jpg'
     # testout = 'output.jpg'
     # blurFile(face_cascade, testin,testout)        
